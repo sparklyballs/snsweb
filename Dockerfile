@@ -1,4 +1,3 @@
-
 ARG ALPINE_VER="3.11"
 FROM alpine:${ALPINE_VER} as fetch-stage
 
