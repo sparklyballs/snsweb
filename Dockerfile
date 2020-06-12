@@ -1,4 +1,4 @@
-ARG ALPINE_VER="3.11"
+ARG ALPINE_VER="3.12"
 FROM alpine:${ALPINE_VER} as fetch-stage
 
 ############## fetch stage ##############
@@ -37,8 +37,7 @@ RUN \
 		/tmp/snsweb.tar.gz -C \
 		/app --strip-components=1
 
-FROM ruby:alpine
-
+FROM ruby:alpine${ALPINE_VER}
 
 # set workdir
 WORKDIR /app
