@@ -53,10 +53,12 @@ RUN \
 	--no-cache \
 	--virtual .build-deps \
 		alpine-sdk \
+		python3-dev \
 	&& apk add \
 	--no-cache \
 		nodejs \
 		nodejs-npm \
+		python3 \
 		tzdata \
 	\
 	# install bundle and npm packages
@@ -71,5 +73,5 @@ RUN \
 
 # ports and start commands
 EXPOSE 3000
-ENTRYPOINT [ "./docker/entrypoint" ]
+ENTRYPOINT [ "./docker/entrypoint.sh" ]
 CMD [ "start" ]
