@@ -1,5 +1,6 @@
 ARG ALPINE_VER="3.12"
-ARG RUBY_VER="alpine${ALPINE_VER}"
+ARG RUBY_VER="2.7.1"
+ARG RUBY_IMAGE="${RUBY_VER}-alpine${ALPINE_VER}"
 
 FROM alpine:${ALPINE_VER} as fetch-stage
 
@@ -39,7 +40,7 @@ RUN \
 		/tmp/snsweb.tar.gz -C \
 		/app --strip-components=1
 
-FROM ruby:${RUBY_VER}
+FROM ruby:${RUBY_IMAGE}
 
 # set workdir
 WORKDIR /app
@@ -56,19 +57,23 @@ RUN \
 		python3-dev \
 	&& apk add \
 	--no-cache \
-		nodejs \
+		git \
+		nodejs-current \
 		nodejs-npm \
 		python3 \
 		tzdata \
+		yarn \
 	\
-	# install bundle and npm packages
+# install bundle and yarn packages
 	\
+	&& yarn install --pure-lockfile \
+	&& gem install bundler \
 	&& bundle install \
-	&& npm install \
-	&& npm run build \
+	&& yarn bundle \
+	&& bundle exec rails assets:precompile \
+# cleanup
 	\
-	# cleanup
-	\
+	&& yarn cache clean \
 	&& apk del .build-deps
 
 # ports and start commands
