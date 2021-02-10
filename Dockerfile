@@ -1,5 +1,5 @@
-ARG ALPINE_VER="3.12"
-ARG RUBY_VER="2.7.1"
+ARG ALPINE_VER="3.13"
+ARG RUBY_VER="2.7.2"
 ARG RUBY_IMAGE="${RUBY_VER}-alpine${ALPINE_VER}"
 
 FROM alpine:${ALPINE_VER} as fetch-stage
@@ -54,13 +54,13 @@ RUN \
 	--no-cache \
 	--virtual .build-deps \
 		alpine-sdk \
-		python3-dev \
+		python2-dev \
 	&& apk add \
 	--no-cache \
 		git \
 		nodejs-current \
 		nodejs-npm \
-		python3 \
+		python2 \
 		tzdata \
 		yarn \
 	\
